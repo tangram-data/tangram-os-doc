@@ -1,0 +1,59 @@
+---
+sidebar_position: 3
+---
+
+import CreateWorkspace from "/img/create_workspace.png";
+
+# Application
+
+
+Tangram OS apps are versions of application code and infrastructure that can be deployed into Tangram OS instance.
+
+---
+
+## What Is An App?
+
+A Tangram OS app is a package of application libraries and manifests that defines app components and necessary infrastructure resources to run those component/services. When installing an app in Tangram OS, the OS control plane will provision the necessary infrasture resources and deploy the app components.
+
+Each Tangram OS app manifest consists of the following parts:
+
+- **App**, defines the basic information about the app:
+  - ***appType*** NativeApp or ConnectorApp
+  - ***group*** app definition namespace
+  - ***name*** app name
+  - ***version*** app manifest version
+  - ***license*** app's license
+  - ***category***, app's category 
+  - ***tags*** tags
+  - ***description*** a brief description of the app
+  - ***readme*** the readme markdown doc of the app 
+
+- **Deployment**, consists of infra resources and app components
+  - ***infra_resources*** declares all the infra resources needed, like a PostgresSQL database, a storage bucket.
+  - ***components*** defines the app components that should be deployed to the Tangram OS compute node, each app component consists of containers and exposed web service.
+
+- **Api**, app's APIs and managed resource types
+  - ***open_api*** declares the Open API spec of the app exposed web service.
+  - ***resource_types*** defines all the resource types managed by the app.
+  - ***spec*** defines the mapping between resource type and the corresponding APIs that the app uses to manage the resource types.
+
+- **Integrations**, defines how apps integrate with each other
+  - ***implemented_integrations*** declares the app implemented integrations with other apps integration interface.
+  - ***integration_interfaces*** defines the app exposed integration interface, that other apps can implement to be integrated with the app.
+
+- **UI**
+  - ***spec*** defines the UI specification of the app.
+
+
+
+# Application Hub
+
+Tangram OS Application hub is a repository of apps that can be deployed into a Tangram OS instance, users can publish applications to their private App Hub and also to Tangram OS Central App to share their Applications with others.
+
+:::info
+
+Currently publishing apps to central Tangram OS App Hub is only open to subscribed users or organizations. For more details about applications, please contact us and request Tangram OS cloud access.
+
+:::
+
+![Application Hub](./img/app_hub.png)

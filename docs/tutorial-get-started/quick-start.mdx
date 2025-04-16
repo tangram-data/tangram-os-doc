@@ -1,0 +1,125 @@
+---
+sidebar_position: 2
+---
+
+
+import NewServicePrincipal from "/img/new_service_principal.png";
+import NewServicePrincipal2 from "/img/create_service_principal_2.png";
+
+import NewServicePrincipalSecret from "/img/create_service_principal_secret.png";
+import NewServicePrincipalSecret2 from "/img/create_sp_secret_2.png";
+import NewDeployment from "/img/create_tangram_os.png";
+import DemoIcebergApp from "./img/demo_iceberg_app.png";
+import TangramSQLEditor from "./img/tangram_sql_editor.png";
+import TangramSearch from "./img/tangram_search.png";
+
+# Quick Start Locally
+
+> ⏱️ Time to complete: ~10 minutes
+
+## Prerequisites
+
+- **Java 11+**
+- **Minikube**, you can follow this link: https://minikube.sigs.k8s.io/docs/start to install Minikube 
+
+
+
+## Deploying Tangram OS Locally in 3 Steps
+
+Before starting, make sure your Minikube instance is up and running on your device.
+
+### 1. Download Tangram CLI Jar 
+Download the latest version:
+- Download Tangram CLI JAR file
+- Move it to your preferred directory
+
+
+### 2. Start Tangram OS CLI Shell
+```bash
+java -jar ./tangram-cli_2.13-1.0.0-all.jar
+```
+
+### 3. Start Local Deployment
+:::warning
+By executing `local start` command in the CLI shell, you choose to agree with the following terms and conditions: 
+
+Tangram OS may be deployed and used locally only for testing, evaluation purposes. This local deployment is provided as-is, without any warranties, guarantees, or support commitments.
+Redistribution to third parties or use for any commercial purposes is prohibited.
+:::
+
+```bash
+tangram> local start
+```
+
+If Tangram OS instance is deployed successfully you should be able to see:
+```python
+tangram> local>
+```
+
+Congratulations! 🎉 You've got Tangram OS up and running on your machine: 
+
+- The Tangram instance **local** is registered and ready to be used with Tangram OS CLI.
+- A account is created with name **tangram** and password also set to **tangram**, can be used to login to Tangram UI.
+- A workspace named **demo** is created, with **Iceberg App** deployed in the workspace.
+- A **catalog** named **iceberg** is created to be used in Tangram SQL for querying Iceberg Tables.
+
+:::info
+If any issue encountered during the setup, you can get help in our [Discord](https://discord.gg/R75hw5sxaH) help channel.
+:::
+## Running Queries Using Tangram OS SQL Shell
+
+1. **Connect to Tangram SQL**
+<div style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
+
+```python
+#This will start Tangram SQL interactive shell to query data using DuckDB
+sql-engine connect duckdb
+```
+</div>
+
+2. **Set Up Catalog and Database**
+<div style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
+
+```sql
+-- set current catalog to demo
+use catalog iceberg;
+-- creating an Iceberg database in catalog demo
+create database test;
+-- set current database to test 
+use database test;
+```
+</div>
+
+3. **Try to create an Iceberg table and write some data for query**
+<div style={{ fontSize: '1.1em', fontWeight: 'bold' }}>
+
+```sql
+-- Create and populate a test table
+create table test_table (id int, name string);
+insert into test_table values (1, 'test');
+select * from test_table;
+```
+</div>
+
+For more details about Tangram OS CLI, you can check the docs [here](/category/tangram-cli)
+
+## Explore Tangram UI
+
+Search created Iceberg Table in Tangram OS search bar
+
+<div style={{ display: "flex", justifyContent: "center", marginBottom:"36px", marginTop:"24px"}}>
+  <img src={TangramSearch}/>
+</div>
+
+You can also query data using [Tangram SQL editor](http://localhost:8081/sql) in Tangram OS UI
+
+<div style={{ display: "flex", justifyContent: "center", marginBottom:"36px", marginTop:"24px"}}>
+  <img src={TangramSQLEditor}/>
+</div>
+
+Navigating in the **demo** workspace, click on the Applications tab you be able to find Iceberg App.
+
+<div style={{ display: "flex", justifyContent: "center", marginBottom:"36px", marginTop:"24px"}}>
+  <img src={DemoIcebergApp}/>
+</div>
+

@@ -1,0 +1,32 @@
+---
+sidebar_position: 3
+---
+import TangramAccessTokens from "./img/tangram_pat_1.png"
+import CreateTangramAccessToken from "./img/tangram_pat_2.png"
+
+# Personal Access Tokens
+
+Personal Access Tokens (PATs) provide an alternative to using passwords for authentication when interacting with Tangram OS via the Tangram OS APIs or Tangram CLI.
+
+## Privileges
+
+A Personal Access Token inherits the same privileges as the user who created it. This means the token can access resources and perform actions within Tangram OS with the same permissions that the token owner has.
+
+For example: if the owner has read and write access to a particular resource, the token will also have those same permissions for that resource.
+
+## Create a Personal Access Token
+
+Via Tangram OS UI, you can navigate to your account profile page by clicking on your logged in icon, then navigate to `Access Tokens` tab to create your access token:
+
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={TangramAccessTokens} />
+</div>
+
+You can also configure an expiration date for the token.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={CreateTangramAccessToken} />
+</div>
+
+

@@ -1,0 +1,50 @@
+---
+sidebar_position: 1
+---
+import ClickHouseReadRole from "./img/clickhouse_role.png"
+
+# Roles
+
+Tangram OS implements a **Role-Based Access Control (RBAC)** model to manage permissions and access to resources.
+
+### Role Definition
+
+A **Role** is an identity that encapsulates a set of permissions. Roles are created within a **workspace** by a **workspace admin**.
+
+- Permissions are assigned to a role to define what actions can be performed on which resource types.
+- Once defined, roles can be reused and applied to multiple accounts.
+
+### Role Binding
+
+A **Role Binding** grants the permissions of a role to an **account**.  
+An account can be:
+
+- A **user**
+- A **user group**
+- A **service account**
+
+Role bindings allow centralized management of access policies across different types of identities.
+
+
+## Role Permission Scope
+
+Tangram OS supports **scoped permissions**, allowing administrators to limit the effect of a role's permissions to a specific context or level of the resource hierarchy.
+
+### Example: Scoped Permission for Iceberg Tables
+
+Consider a role with the ClickHouse `Table:Read` permission:
+
+- **Workspace-Level Scope**:  
+  Allows the role to read all ClickHouse tables across the entire workspace.
+
+- **Database-Level Scope**:  
+  Restricts read access to ClickHouse tables within a specific ClickHouse database.
+
+- **Table-Level Scope**:  
+  Grants permission to read from a single, specific ClickHouse table only.
+
+This scoped approach enables **fine-grained access control**, supporting the principle of least privilege and enhancing security.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={ClickHouseReadRole} />
+</div>

@@ -1,0 +1,58 @@
+---
+slug: /
+sidebar_position: 1
+---
+import TangramArchitectureDiagram from "./img/tangram_archi.png";
+import {Button, Divider} from "antd";
+
+# What is Tangram OS
+
+Tangram OS is a control plane that unifies data and application ecosystems by integrating fragmented components into one cohesive platform:
+
+- **Composable**: standardize Apps and data integration across stacks, breaks down silos and enables AI-driven automation.
+- **Secure**: governance and access control across data, metadata and application resources with comprehensive audit capabilities.
+- **Consistent**: abstracts cloud providers with consistent resource provisioning and application deployment, reduce DevOps burden.
+
+With built-in extensibility, teams can choose the best tools for their needs—without vendor lock-in, along with lineage tracking to capture dependencies between data, tools, and processes. This ensures transparency, compliance, and operational confidence throughout the stack.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <QuickStartButton />
+  <Divider type="vertical"/>
+  <RequestCloudAccess />
+
+</div>
+
+## Architecture Overview
+
+
+export const QuickStartButton = (({}) => {
+ function navigateToQuickStart() {
+  window.location.href = '/tutorial-get-started/quick-start';
+ }
+ return <Button type="primary" ghost onClick={navigateToQuickStart} size ="large" style={{width:"300px", margin:"36px 36px 36px 0"}}>Get Started Locally</Button>
+});
+
+export const RequestCloudAccess = (({}) => {
+ function navigateToQuickStart() {
+  window.location.href = 'https://www.tangram-os.ai/join-private-priview';
+ }
+ return <Button type="primary" onClick={navigateToQuickStart} size ="large" style={{width:"300px", margin:"36px 0"}}>Request Cloud Access</Button>
+});
+
+<div style={{ display: "flex", justifyContent: "center", marginBottom:"36px", marginTop:"24px"}}>
+  <img src={TangramArchitectureDiagram} width="720px"/>
+</div>
+
+
+Tangram Core Services, the core orchestration and governance layer, consisting of modular control plane components:
+
+- **Universal Catalog**: A unified repository for all resources and data managed by applications deployed in the OS. It captures app resource automatically in real time and
+  requires no explicit configuration for ensuring seamless governance and discovery of application resources - be it data, workflows, or custom resource types, it enables governance and discovery to extend beyond traditional data resources, covering virtually any asset type defined by users.
+
+- **IAM Service**: Identity and Access Management for defining and enforcing fine-grained, role-based access policies across all resources.
+
+- **Compute & Storage Service**: Abstracts and manages underlying compute and storage backends, ensuring consistent provisioning and operational control across cloud providers.
+
+- **Application Service**: Manages lifecycle and runtime operations of deployed applications and services.
+
+- **SQL Service**: A federated SQL engine that enables querying across heterogeneous data engines (e.g., ClickHouse, DuckDB, Databricks) based on PostgreSQL wire protocol.

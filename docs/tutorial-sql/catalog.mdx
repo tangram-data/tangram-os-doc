@@ -1,0 +1,111 @@
+---
+sidebar_position: 3
+---
+
+import CreateCatalog from "./img/create_catalog.png";
+
+# Name Resolution
+
+With Tangram SQL, dataset can be queried using the resource name as the following:
+
+```sql
+# DuckDB, quoted table resource name
+select * from "rn://ai.tangram/iceberg/Table/tangram_demo/test/nyc_taxi";
+```
+Resource names in Tangram OS can be long and verbose, which can make them less convenient to use directly in SQL queries.
+To address this, like most modern SQL engines, Tangram SQL supports the use of **Catalogs** as shorthand references.
+
+A **Catalog** in Tangram SQL is a named container for dataset-related entities (e.g., schemas, tables, views) associated with a **deployed application** in the OS.
+
+By creating catalogs, users can:
+
+- Simplify SQL syntax and improve readability
+- Reduce the need to reference full resource names in queries
+- Organize data entities by application context
+
+## Create a catalog
+In Tangram OS UI, navigate to `/workspace/<workspace_name>/datasets`, click on the button `Data Catalogs` to open catalog list and then click the button `Register Data Catalog` to create a catalog.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={CreateCatalog} />
+</div>
+
+
+## Querying With Catalogs
+
+Assume a catalog named `iceberg_test_catalog` has been created to serve as the namespace for all Iceberg tables associated with an **Iceberg App** deployed in the `demo` workspace.
+
+With the catalog registered, we can query an Iceberg table using a fully qualified name in the format:
+
+```sql
+SELECT * FROM iceberg_test_catalog.test.nyc_taxi;
+```
+
+### Name Resolution
+Tangram SQL resolves the qualified table reference in the format:
+```
+<catalog_name>.<database_name>.<table_name>
+```
+In the above example:
+
+- iceberg_test_catalog → the registered catalog for the Iceberg App
+- test → the Iceberg database name
+- nyc_taxi → the target Iceberg table
+
+Tangram SQL will resolve this reference to the fully qualified Iceberg resource in the demo workspace, allowing seamless access without the need to type long resource names.
+
+### Set Current Catalog & Schema
+
+To avoid repeatedly specifying fully qualified table names with catalog prefixes, Tangram SQL allows you to set the **current catalog** using the `USE CATALOG` statement:
+
+```sql
+use catalog iceberg_test_catalog;
+```
+Once the current catalog is set, you can reference tables using just the database name and table name, omitting the catalog:
+
+```sql
+select * from test.nyc_taxi;
+```
+
+Further we can set the **current database** or **current schema** using the `USE DATABASE` or `USE SCHEMA` statement:
+
+```sql
+use database test;
+```
+Once the current database is set, you can reference tables using just table name, omitting the catalog and the database:
+
+```sql
+select * from nyc_taxi;
+```
+
+### Show Catalogs, Schemas and Tables
+
+To list catalogs, we can use `SHOW CATALOGS` statement:
+```SQL
+-- list all catalogs
+show catalogs;
+-- list all the catalogs that have name starts with iceberg
+show catalogs like 'iceberg%'
+```
+
+To list schemas, we can use `SHOW SCHEMAS` statement:
+```SQL
+-- list all schemas in iceberg_test_catalog
+show schemas in iceberg_test_catalog;
+-- list all the schemas that have name starts with test
+show schemas in iceberg_test_catalog like 'test%'
+```
+
+To list tables, we can use `SHOW TABLES` statement:
+```SQL
+-- list all tables in iceberg_test_catalog catalog and test database
+show tables in iceberg_test_catalog.test;
+-- list all the tables that have name starts with nyc
+show tables in iceberg_test_catalog.test like 'nyc%';
+```
+
+
+
+
+
+

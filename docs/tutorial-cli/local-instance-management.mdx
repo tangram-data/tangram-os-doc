@@ -1,0 +1,23 @@
+---
+sidebar_position: 2
+---
+
+# Managing Local Deployment
+
+### Start Tangram OS local deployment
+
+If there's no local instance deployed, this will download and deploy Tangram OS locally, otherwise it will start k8s port forwarding so that local Tangram OS UI and services can be accessed.
+```bash
+local start
+```
+
+### Stop port forwarding:
+```bash
+local stop
+```
+
+### Destroy local deployment
+This will destroy Tangram OS local deployment from your device, clean up all resources it deployed.
+```bash
+local destroy
+```
