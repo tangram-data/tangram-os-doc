@@ -15,11 +15,9 @@ Tangram OS is a control plane that unifies data and application ecosystems by in
 
 With built-in extensibility, teams can choose the best tools for their needs—without vendor lock-in, along with lineage tracking to capture dependencies between data, tools, and processes. This ensures transparency, compliance, and operational confidence throughout the stack.
 
-<div style={{ display: "flex", justifyContent: "center" }}>
+<div className="enroll-buttons" style={{ display: "flex", justifyContent: "center" }}>
   <QuickStartButton />
-  <Divider type="vertical"/>
   <RequestCloudAccess />
-
 </div>
 
 ## Architecture Overview
@@ -29,14 +27,14 @@ export const QuickStartButton = (({}) => {
  function navigateToQuickStart() {
   window.location.href = '/tutorial-get-started/quick-start';
  }
- return <Button type="primary" ghost onClick={navigateToQuickStart} size ="large" style={{width:"300px", margin:"36px 36px 36px 0"}}>Get Started Locally</Button>
+ return <Button type="primary" ghost onClick={navigateToQuickStart} size ="large" style={{width:"300px"}}>Get Started Locally</Button>
 });
 
 export const RequestCloudAccess = (({}) => {
  function navigateToQuickStart() {
   window.location.href = 'https://www.tangram-os.ai/join-private-priview';
  }
- return <Button type="primary" onClick={navigateToQuickStart} size ="large" style={{width:"300px", margin:"36px 0"}}>Request Cloud Access</Button>
+ return <Button type="primary" onClick={navigateToQuickStart} size ="large" style={{width:"300px"}}>Request Cloud Access</Button>
 });
 
 <div style={{ display: "flex", justifyContent: "center", marginBottom:"36px", marginTop:"24px"}}>
