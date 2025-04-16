@@ -11,15 +11,15 @@ const config: Config = {
   themes: ["@docusaurus/theme-mermaid"],
 
   // Set the production url of your site here
-  url: "https://your-docusaurus-site.example.com",
+  url: "https://docs.tangram-os.ai",
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: "/",
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: "Tangram Data", // Usually your GitHub org/user name.
-  projectName: "Tagnram OS", // Usually your repo name.
+  organizationName: "tangram-data", // Usually your GitHub org/user name.
+  projectName: "tangram-os-doc", // Usually your repo name.
 
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
