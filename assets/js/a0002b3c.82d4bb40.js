@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkmy_website=self.webpackChunkmy_website||[]).push([[7626],{3883:e=>{e.exports=JSON.parse('{"categoryGeneratedIndex":{"title":"Get Started","slug":"/category/get-started","permalink":"/category/get-started","sidebar":"tutorialSidebar","navigation":{"next":{"title":"What is Tangram OS","permalink":"/"}}}}')}}]);
