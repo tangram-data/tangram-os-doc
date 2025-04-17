@@ -7,10 +7,10 @@ sidebar_position: 7
 The **app** command is a group of commands used to manage applications in a Tangram workspace.  
 It allows you to list applications, retrieve application details, inspect infrastructure resources, and check the status of application components.
 
-### List applications in the `tangram_demo` workspace:
+### List applications in the `demo` workspace:
 
 ```bash
-app ls -w tangram_demo
+app ls -w demo
 
 app                | version
 -------------------+--------
@@ -20,16 +20,16 @@ ai.tangram.iceberg | 1.0.0
 
 ### Get application details:
 ```bash
-app get ai.tangram iceberg -w tangram_demo
+app get ai.tangram iceberg -w demo
 ```
 
 ### Inspect application infrastructure resources:
 ```bash
-app infra-resources ai.tangram iceberg -w tangram_demo
+app infra-resources ai.tangram iceberg -w demo
 ```
 
 ### Check component status:
 ```bash
-app component status ai.tangram iceberg catalog-service -w tangram_demo
+app component status ai.tangram iceberg catalog-service -w demo
 ```
 

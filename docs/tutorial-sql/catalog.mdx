@@ -10,7 +10,7 @@ With Tangram SQL, dataset can be queried using the resource name as the followin
 
 ```sql
 # DuckDB, quoted table resource name
-select * from "rn://ai.tangram/iceberg/Table/tangram_demo/test/nyc_taxi";
+select * from "rn://ai.tangram/iceberg/Table/demo/test/nyc_taxi";
 ```
 Resource names in Tangram OS can be long and verbose, which can make them less convenient to use directly in SQL queries.
 To address this, like most modern SQL engines, Tangram SQL supports the use of **Catalogs** as shorthand references.
