@@ -6,7 +6,7 @@ import CreateWorkspace from "/img/create_workspace.png";
 
 # How To Connect
 
-**Tangram SQL Service** implements **PostgreSQL wire protocol**, tools or libs that work with PostgreSQL can be directly used to connect Tangram SQL service.
+The **Tangram SQL Service** implements the **PostgreSQL wire protocol**, so tools or libraries that work with PostgreSQL can be used directly to connect to the Tangram SQL service.
 
 ## Examples
 
@@ -14,7 +14,7 @@ import CreateWorkspace from "/img/create_workspace.png";
 
 ```python
 # replace `localhost` with your own Tangram OS SQL service host
-# replace `duckdb` to the SQL engine id or alias for the engine you want to connect
+# replace `duckdb` with the SQL engine id or alias for the engine you want to connect
 psql -p 9200 --host localhost  -U tangram -d duckdb
 ```
 
