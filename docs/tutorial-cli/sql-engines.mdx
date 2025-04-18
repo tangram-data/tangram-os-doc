@@ -8,8 +8,7 @@ The sql-engine command group allows you to manage and interact with SQL database
 
 ### List available SQL engines:
 ```bash
-tangram> local> sql-engine ls
-
+sql-engine ls
 id                                       | alias  | resource_name
 -----------------------------------------+--------+--------------------------------------------------
 1f50fb38a8020364255a12b4e113c92a32503c5e | duckdb | rn://org.duckdb/duckdb/Instance/tangram_os/duckdb
@@ -17,7 +16,7 @@ id                                       | alias  | resource_name
 ```
 
 ### Connect to a SQL engine to start interactive SQL shell:
-```python
+```bash
 # Example: sql-engine connect duckdb
 sql-engine connect <sql-engine-id or alias>
 ```
