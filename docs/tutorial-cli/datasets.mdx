@@ -6,13 +6,11 @@ sidebar_position: 7
 
 ### Get latest schema for a dataset
 ```bash
-tangram> local> dataset latest-schema --resourceName rn://ai.tangram/iceberg/Table/demo/test/click_logs
+dataset latest-schema --resourceName rn://ai.tangram/iceberg/Table/demo/test/click_logs
 
 name       | nullable | dataType 
 -----------+----------+----------
 event_time | true     | timestamp
 song       | true     | integer  
-user       | true     | string   
-tangram> local> workspace create -w demo0412 --admin UserAccount/tangram
-Workspace 'demo0412' successfully created.
+user       | true     | string  
 ```
