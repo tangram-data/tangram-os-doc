@@ -1,0 +1,50 @@
+---
+sidebar_position: 3
+---
+import CreateDuckLake from "./img/create_duck_lake.png";
+import RegisterDuckLakeCatalog from "./img/register_duck_lake_catalog.png";
+
+# Create Duck Lake
+
+## Creating a duck lake
+
+To create a new duck lake:
+
+1. In the Duckling App, navigate to the Duck Lakes tab.
+2. Click the New DuckLake button:
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={CreateDuckLake} width={"100%"} />
+</div>
+
+### Configure Storage Bucket(Optional)
+
+By default, DuckLake will use the default storage bucket managed by the Duckling App.
+
+If you'd like to use a different storage bucket:
+* You can specify a custom bucket during creation.
+* Ensure that the Duckling App service account has the CreateFolder privilege on the selected bucket.
+
+
+## Register duck lake to Tangram SQL catalog
+To query a DuckLake using a Duckling instance, you’ll need to register it with the Tangram SQL catalog:
+
+1. Open the Tangram SQL Editor from the left menu in the Tangram OS UI.
+2. Click New Catalog and configure it to bind with the newly created DuckLake:
+
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={RegisterDuckLakeCatalog} width={"100%"} />
+</div>
+
+
+Once the catalog is created, you can run queries against your DuckLake.
+
+```sql
+CREATE TABLE my_ducklake.main.t1(x INT);
+
+FROM my_ducklake.main.t1;
+
+CREATE VIEW my_ducklake.main.v1 AS FROM my_ducklake.main.t1;
+
+```

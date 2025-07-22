@@ -67,12 +67,12 @@ const config: Config = {
           label: "Docs",
         },
         {
-          href: "https://discord.gg/hey4u954",
+          href: "https://discord.gg/qChtVWGVfk",
           label: "Join Discord Channel",
           position: "right",
         },
         {
-          href: "https://www.tangram-os.ai/join-private-priview",
+          href: "https://www.tangram-os.ai/request-cloud-access",
           label: "Request Cloud Access",
           position: "right",
         },
@@ -95,7 +95,7 @@ const config: Config = {
           items: [
             {
               label: "Discord",
-              href: "https://discord.gg/hey4u954",
+              href: "https://discord.gg/qChtVWGVfk",
             },
           ],
         },

@@ -1,0 +1,38 @@
+---
+sidebar_position: 2
+---
+
+import CreateDucklingInstance from "./img/create_duckling_instance.png";
+import ConnectToDucklingInstance from "./img/connect_to_duckling_instance.png";
+
+# Duckling Compute Instance
+
+A Duckling Compute Instance is a DuckDB-based compute engine that runs on the Tangram OS server. It supports reading and writing open table formats such as Apache Iceberg and DuckLake. (Currently, only reading is supported for Delta Lake tables.)
+
+
+## Creating a Duckling Instance
+
+To create a new Duckling instance:
+
+Open the Duckling App (you can search for "Duckling" in the search bar if you have many workspaces and apps installed).
+In the Duckling App, navigate to the Compute Instances tab.
+Click the New Instance button:
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={CreateDucklingInstance} width={"100%"} />
+</div>
+
+### Configuration Options
+When creating a new instance, you can:
+* Set CPU and memory allocation.
+* Enable auto-stop based on query idle time.
+  - When auto-stop is enabled, the instance will automatically stop if no queries are run during the specified idle period.
+  - It will automatically start again when a user attempts to connect.
+
+
+## Connect to Duckling instance via Tangram SQL UI
+
+Once a Duckling instance is created, navigate to the Tangram SQL Console from the menu bar. From there, use the Query Engines dropdown to select and connect to your Duckling instance for querying.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={ConnectToDucklingInstance} width={"100%"} />
+</div>

@@ -1,0 +1,88 @@
+---
+sidebar_position: 1
+---
+
+import CreateDucklingInstance from "./img/create_duckling_instance.png";
+import ConnectToDucklingInstance from "./img/connect_to_duckling_instance.png";
+import CreateDuckLake from "./img/create_duck_lake.png";
+import RegisterDuckLakeCatalog from "./img/register_duck_lake_catalog.png";
+
+# Quick Start Locally
+
+## Start Tangram OS local instance
+
+If you haven’t deployed Tangram OS locally yet, follow this [Quick Start Guide](https://docs.tangram-os.ai/tutorial-get-started/quick-start) to launch a local Tangram OS instance on your device.
+
+## Create a Duckling Instance
+A Duckling Compute Instance is a DuckDB-based compute engine that runs on the Tangram OS server. It supports reading and writing open table formats such as Apache Iceberg and DuckLake. (Currently, only reading is supported for Delta Lake tables.)
+
+To create a new Duckling instance:
+
+Open the Duckling App (you can search for "Duckling" in the search bar if you have many workspaces and apps installed).
+In the Duckling App, navigate to the Compute Instances tab.
+Click the New Instance button:
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={CreateDucklingInstance} width={"100%"} />
+</div>
+
+### Configuration Options
+When creating a new instance, you can:
+* Set CPU and memory allocation.
+* Enable auto-stop based on query idle time.
+  - When auto-stop is enabled, the instance will automatically stop if no queries are run during the specified idle period.
+  - It will automatically start again when a user attempts to connect.
+
+
+## Connect to Duckling instance via Tangram SQL UI
+
+Once a Duckling instance is created, navigate to the Tangram SQL Console from the menu bar. From there, use the Query Engines dropdown to select and connect to your Duckling instance for querying.
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={ConnectToDucklingInstance} width={"100%"} />
+</div>
+
+
+## Create a duck lake
+
+To create a new duck lake:
+
+1. In the Duckling App, navigate to the Duck Lakes tab.
+2. Click the New DuckLake button:
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={CreateDuckLake} width={"100%"} />
+</div>
+
+### Configure Storage Bucket(Optional)
+
+By default, DuckLake will use the default storage bucket managed by the Duckling App.
+
+If you'd like to use a different storage bucket:
+* You can specify a custom bucket during creation.
+* Ensure that the Duckling App service account has the CreateFolder privilege on the selected bucket.
+
+
+## Register duck lake to Tangram SQL catalog
+To query a DuckLake using a Duckling instance, you’ll need to register it with the Tangram SQL catalog:
+
+1. Open the Tangram SQL Editor from the left menu in the Tangram OS UI.
+2. Click New Catalog and configure it to bind with the newly created DuckLake:
+
+
+<div style={{ display: "flex", justifyContent: "center" }}>
+  <img src={RegisterDuckLakeCatalog} width={"100%"} />
+</div>
+
+
+Once the catalog is created, you can run queries against your DuckLake.
+
+```sql
+CREATE TABLE my_ducklake.main.t1(x INT);
+
+FROM my_ducklake.main.t1;
+
+CREATE VIEW my_ducklake.main.v1 AS FROM my_ducklake.main.t1;
+
+```
+
+Also, you can find the Duckling demo video [here](https://www.youtube.com/watch?v=C6GoEoRBGuw).
