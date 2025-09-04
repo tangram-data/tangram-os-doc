@@ -1,0 +1,42 @@
+---
+sidebar_position: 1
+---
+
+# Onboarding Guide: Integrating a Native App with Tangram
+
+Welcome! This guide will help you onboard your own **Native App** to Tangram—an app that exposes a REST API, such as a data warehouse service, ML platform, or analytics backend.
+
+Tangram enables you to treat your app's resources (like databases, tables, models, etc.) as first-class citizens by mapping REST API operations into the Tangram resource/action model.  
+This is achieved by specifying your API using OpenAPI, then mapping API operations to Tangram resources and actions in your manifest.
+
+---
+
+## 🚦 What is a Native App in Tangram?
+
+A **Native App** is any app that exposes its capabilities via a REST API, documented (ideally) in OpenAPI format. Tangram integrates with your app by calling these HTTP endpoints, mapping the business logic to its own resource semantics.
+
+**Examples:**  
+- Data warehouse APIs (e.g., Iceberg catalog service)
+- ML platforms (e.g., MLflow)
+- Analytics/BI servers
+
+
+---
+
+## 🛠️ Steps to Integrate
+
+1. **Document your API** using OpenAPI and save it as `open_api.yaml`.
+2. **Define resource types and actions** in your manifest (see `resource_types.pkl` for examples).
+3. **Map each operationId** to a resource/action in `spec.pkl`, using templates to extract names/IDs.
+
+---
+
+## 📚 Further Reading
+
+- [tangram-iceberg-app: Example Implementation](https://github.com/tangram-data/tangram-iceberg-app/tree/main/release/manifests/api)
+- [Tangram App Manifest Schema](https://github.com/tangram-data/tangram-app-manifest)
+- [OpenAPI Specification](https://swagger.io/specification/)
+
+---
+
+**Now you’re ready to bring your service’s REST API into the Tangram ecosystem!**
