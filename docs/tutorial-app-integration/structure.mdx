@@ -144,16 +144,29 @@ For each API operation, you specify a **resourceType** and a **resourceNameTempl
 
 ---
 
+## Understanding resourceName in Tangram
+
+A **resourceName** uniquely identifies each resource instance (like a database, table, or view) in your integration. The **resourceType** defines the resource category (e.g., Table), while the **resourceName** pinpoints which specific resource is referenced.
+
+Tangram uses the **resourceNameTemplate** to extract the resourceName for each API operation, typically from path parameters or the request body.
+
+---
+
 ## Example: Mapping resourceName from an Endpoint
 
 For this endpoint in `open_api.yml`:
 
 ```yaml
-/api/v1/databases/{dbName}:
+/api/v1/databases/{dbName}/tables/{tableName}:
   get:
-    operationId: getDB
+    operationId: getIcebergTable
     parameters:
       - name: dbName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tableName
         in: path
         required: true
         schema:
@@ -163,20 +176,23 @@ For this endpoint in `open_api.yml`:
 The entry in `spec.pkl`:
 
 ```pkl
-getDB {
-  resourceType = "Database"
-  resourceNameTemplate = "[{{parameters.dbName}}]"
+getIcebergTable {
+  resourceType = "Table"
+  resourceNameTemplate = "[{{parameters.dbName}}, {{parameters.tableName}}]"
   action = "Get"
 }
 ```
 
-**resourceNameTemplate** tells Tangram to extract the resourceName from the `dbName` path parameter in the request.
+Here, `resourceNameTemplate` tells Tangram to extract `dbName` and `tableName` from the path and use them to construct the resourceName.
 
-The `resourceNameTemplate` field specifies how Tangram should extract or construct the unique `resourceName` for a resource instance by using values from the API request (such as path parameters or request body fields).
+For example, a request to `GET /api/v1/databases/demo/analytics/tables/click_events` would result in the following Resource Name (RN) URI:
 
-This means:
-- Tangram interprets `GET /api/v1/databases/{dbName}` as a "Get" action on a "Database" resourceType.
-- The specific `resourceName` is extracted from the `dbName` path parameter.
+```
+rn://ai.tangram/iceberg/Table/demo/analytics/click_events
+```
+
+This format captures the resource type along with its hierarchical location, providing a globally unique identifier for the resource.
+
 
 > See also: [Tangram Docs: resourceName](https://docs.tangram-os.ai/tutorial-basics/resource#resource-name)  
 
