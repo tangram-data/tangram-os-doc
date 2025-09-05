@@ -1,0 +1,88 @@
+---
+sidebar_position: 4
+---
+
+## 🚀 Quick Start: Generate an App Template with Tangram CLI
+
+To help you get started, Tangram provides a CLI that can auto-generate a complete manifest and directory structure for your new app integration. This saves you time and ensures the correct structure.
+
+### 1. Install Tangram CLI
+
+Follow the instructions [here](https://github.com/tangram-data/tangram-data-os#installation) to install the Tangram CLI.
+
+### 2. Create a New App Template
+
+After selecting a context by `use <context>` , run the following command (replace the placeholders as needed):
+
+```bash
+app create <appGroup> <appName> --version <version>
+```
+
+- `<appGroup>`: Your organization or app group (e.g. `com.myorg`)
+- `<appName>`: Your app's name (e.g. `myapp`)
+- `--version`: (Optional) App version, default is `1.0.0`
+
+**Example:**
+
+```bash
+app create com.myorg myapp --version 1.0.0
+```
+
+#### 👉 What does this do?
+
+- **Generates a directory:** `com.myorg/myapp/manifests/`
+- **Creates all required manifest files:** including `app.pkl`, `api/resource_types.pkl`, `api/spec.pkl`, `api/open_api.yml`, `integrations/implemented_integrations.pkl`, and more.
+- **Populates resource types:** You’ll be prompted (or can pass flags) to specify the resource types and actions your app supports.
+
+### 3. Customize Your Template
+
+- Edit the generated manifest files to define your app’s resources, API, and integration logic.
+- Use the [Onboarding Guide](docs/onboarding_new_app.md) in this repo for detailed instructions.
+
+---
+
+## 📑 Reference
+
+- See [docs/onboarding_new_app.md](docs/onboarding.md) for a complete step-by-step guide to onboarding a new app with Tangram.
+- Review the [tangram-app-manifest](https://github.com/tangram-data/tangram-app-manifest) repo for manifest schema details and additional examples.
+
+---
+
+## 🛠️ Development
+
+- All manifests are written in [Pkl](https://pkl-lang.org/).
+- Use `pkl eval` to validate your manifest files.
+
+---
+
+## 📣 Need Help?
+
+- [Tangram Community Slack](https://tangram-data.slack.com/)
+- File an issue in this repo
+
+---
+
+## Example
+
+Below is an example command to create a new app manifest template for a fictional app:
+
+```bash
+tangram app create com.example mydb --version 1.0.0
+```
+
+This will produce:
+
+```
+com.example/mydb/manifests/
+  app.pkl
+  api/
+    resource_types.pkl
+    spec.pkl
+    open_api.yml
+  integrations/
+    implemented_integrations.pkl
+  README.md
+  ...
+```
+
+Continue editing these files as described in the onboarding guide.
