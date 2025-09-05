@@ -128,20 +128,39 @@ apiSpec {
     - A `resourceType` (e.g., Database, Table, Catalog, View)
     - An `action` (e.g., Create, Get, List, Delete, Update)
     - Templates for extracting resource names/IDs from the request or response
+    
+## Understanding resourceName in Tangram
+
+A **resourceName** uniquely identifies each resource instance (like a database, table, or user) in your integration. The **resourceType** defines the resource category (e.g., Database), while the **resourceName** pinpoints which specific resource is referenced (e.g., `sales_db`).
+
+**Why is resourceName important?**  
+Tangram relies on resourceName to:
+- Reference, create, update, or delete specific resources in your app
+- Display resources in the UI and automations
+- Map API operations to resource actions
+
+**How do you define resourceName?**  
+For each API operation, you specify a **resourceType** and a **resourceNameTemplate**. The resourceNameTemplate tells Tangram how to extract the resourceName, usually from API path parameters or request bodies.
 
 ---
 
-### 3. Example: Mapping an Endpoint
+## Example: Mapping resourceName from an Endpoint
 
-Suppose your API endpoint is:
+For this endpoint in `open_api.yml`:
 
 ```yaml
 /api/v1/databases/{dbName}:
   get:
     operationId: getDB
+    parameters:
+      - name: dbName
+        in: path
+        required: true
+        schema:
+          type: string
 ```
 
-In `spec.pkl`:
+The entry in `spec.pkl`:
 
 ```pkl
 getDB {
@@ -151,8 +170,15 @@ getDB {
 }
 ```
 
+**resourceNameTemplate** tells Tangram to extract the resourceName from the `dbName` path parameter in the request.
+
+The `resourceNameTemplate` field specifies how Tangram should extract or construct the unique `resourceName` for a resource instance by using values from the API request (such as path parameters or request body fields).
+
 This means:
-- When Tangram calls `GET /api/v1/databases/{dbName}`, it's interpreted as a "Get" action on a "Database" resource with the name taken from the path parameter.
+- Tangram interprets `GET /api/v1/databases/{dbName}` as a "Get" action on a "Database" resourceType.
+- The specific `resourceName` is extracted from the `dbName` path parameter.
+
+> See also: [Tangram Docs: resourceName](https://docs.tangram-os.ai/tutorial-basics/resource#resource-name)  
 
 ---
 ## How the Pieces Fit Together
