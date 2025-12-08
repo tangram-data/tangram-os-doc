@@ -20,12 +20,12 @@ import TangramSearch from "./img/tangram_search.png";
 ## Prerequisites
 
 - **Java 11+**
-- **Minikube**, you can follow this [link](https://minikube.sigs.k8s.io/docs/start) to install Minikube.
+- **Minikube** or any other local k8s environment, you can follow this [link](https://minikube.sigs.k8s.io/docs/start) to install Minikube.
 
 If Minikube is not already running on your device, you need to start your Minikube instance before deploying Tangram OS locally.
-You will need the minikube configured with at least 4GiB of memory and more than 2 CPUs(ideally more than 4 CPUs if you want to test Tangram SQL with a local ClickHouse instance ). 
+You will need the minikube configured with at least 6GiB of memory and more than 4 CPUs(ideally more than 6 CPUs and 8GB memory if you want to test Tangram OS Agent chat and Tangram SQL with a local ClickHouse instance). 
 ```bash
-minikube start --memory 4096 --cpus 4 
+minikube start --memory 6144 --cpus 4 
 ```
 
 
@@ -35,18 +35,14 @@ Before starting, make sure your Minikube instance is up and running on your devi
 
 ### 1. Download Tangram CLI Jar
 
-- Download [Tangram CLI JAR](https://github.com/tangram-data/tangram-os-doc/releases/download/tangram-cli-1.0.0-beta.1/tangram-cli_2.13-1.0.0-all.jar) file
+- Download [Tangram CLI JAR](https://github.com/tangram-data/tangram-os-doc/releases/download/tangram-cli-1.0.0-beta.2/tangram-cli_2.13-1.0.0-all.jar) file
 - Move it to your preferred directory
 
 
 ### 2. Start Tangram OS CLI Shell
 ```bash
-java -jar ./tangram-cli_2.13-1.0.0-all.jar --with-clickhouse
+java -jar ./tangram-cli_2.13-1.0.0-all.jar
 ```
-
-:::info
-`--with-clickhouse` is optional for enabling a deployment of a local ClickHouse instance for testing Tangram SQL multi-engine support.
-:::
 
 
 ### 3. Start Local Deployment
@@ -60,6 +56,14 @@ Redistribution to third parties or use for any commercial purposes is prohibited
 ```bash
 tangram> local start
 ```
+or
+```
+tangram > local start --with-clickhouse
+```
+
+:::info
+`--with-clickhouse` is optional for enabling a deployment of a local ClickHouse instance for testing Tangram SQL multi-engine support.
+:::
 
 If Tangram OS instance is deployed successfully you should be able to see:
 ```python
