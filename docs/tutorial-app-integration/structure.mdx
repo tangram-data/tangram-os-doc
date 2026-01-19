@@ -1,0 +1,212 @@
+---
+sidebar_position: 3
+---
+
+# Tangram App Manifest: Folder Structure, Key Files, and Field Meanings
+
+This document explains the structure of a Tangram app manifest, using the [Snowflake Connector](https://github.com/tangram-data/tangram-snowflake-connector) as an example. It covers how files relate, what each field in the manifest means, and how the manifest schema models your app.
+
+
+## 📁 Folder & File Structure
+
+A typical Tangram integration app repository looks like:
+
+```
+release/
+  manifests/
+    app.pkl
+    api/
+      resource_types.pkl
+      spec.pkl
+      open_api.yaml
+    integrations/
+      implemented_integrations.pkl
+    ...
+```
+---
+
+## 📁 Manifest Structure & Key Files
+
+Your repo should contain (inside `release/manifests/api/`):
+
+- `open_api.yaml` — OpenAPI 3.x spec describing your REST API
+- `spec.pkl` — Pkl manifest mapping OpenAPI operations to Tangram resources/actions
+
+---
+
+## 🧩 How to Structure Your Native App Integration
+
+Let's use [`tangram-iceberg-app`](https://github.com/tangram-data/tangram-iceberg-app) as a concrete example.
+
+### 1. `open_api.yaml`: Your REST API in OpenAPI Format
+
+This file should be a faithful, machine-readable description of your service's HTTP endpoints, methods, parameters, and schemas.
+
+**Example (`release/manifests/api/open_api.yaml`):**
+```yaml
+openapi: 3.1.0
+info:
+  title: Iceberg warehouse service
+  version: 1.0.0
+paths:
+  /api/v1/databases:
+    get:
+      summary: List database.
+      operationId: listDBs
+      # ...
+    post:
+      summary: Create database.
+      operationId: createDB
+      # ...
+  /api/v1/databases/{dbName}:
+    get:
+      summary: Get database.
+      operationId: getDB
+      # ...
+# ...many more endpoints for tables, namespaces, config, etc.
+```
+This OpenAPI spec mirrors the endpoints and data model of your service (here, an Iceberg data warehouse API).
+
+> **Note: What if Your REST API Is Not Described by OpenAPI?**  
+> If your service app’s API is not already described by OpenAPI, you will need to create an OpenAPI specification before integrating with Tangram.
+
+**How to create an OpenAPI specification:**
+
+1. **Manual Authoring**  
+   Write an OpenAPI spec (YAML or JSON) that documents all of your REST API’s endpoints, including:
+   - Paths and HTTP methods
+   - Request and response types
+   - Data schemas
+  
+
+2. **Auto-Generation (If Supported)**  
+   Many popular frameworks and tools can automatically generate OpenAPI specs from your codebase or annotations:
+   - **Python:** [FastAPI](https://fastapi.tiangolo.com/), [Flask-RESTX/Swagger decorators](https://flask-restx.readthedocs.io/en/latest/swagger.html)
+   - **Java:** [SpringDoc for Spring Boot](https://springdoc.org/)
+   - **Other:** Check your framework’s documentation for OpenAPI or Swagger support.
+  
+  3. **References & Resources**
+   - [OpenAPI Specification](https://swagger.io/specification/)
+   - [Swagger Editor (live)](https://editor.swagger.io/) — Use this online editor to write, validate, and preview your OpenAPI spec.
+  
+---
+
+### 2. `spec.pkl`: Mapping API Operations to Tangram Resources/Actions
+
+This file tells Tangram how to interpret your API: which HTTP operation corresponds to which resource/action in the Tangram model, and how to extract resource identifiers.
+
+**Example (`release/manifests/api/spec.pkl`):**
+```pkl
+apiServiceName = "catalog-service"
+port = 9494
+authMode = "Proxy"
+apiSpec {
+  type = "OpenApi3YamlSpec"
+  specYaml = read("open_api.yml").text
+  operationResourceActionMapping {
+    listDBs {
+      resourceType = "Database"
+      resourceNameTemplate = "[]"
+      action = "List"
+    }
+    createDB {
+      resourceType = "Database"
+      resourceNameTemplate = "[{{requestBody.db}}]"
+      action = "Create"
+    }
+    getDB {
+      resourceType = "Database"
+      resourceNameTemplate = "[{{parameters.dbName}}]"
+      action = "Get"
+    }
+    # ...and so on for tables, views, catalog, etc.
+  }
+}
+```
+
+- Each `operationId` from the OpenAPI spec is mapped to:
+    - A `resourceType` (e.g., Database, Table, Catalog, View)
+    - An `action` (e.g., Create, Get, List, Delete, Update)
+    - Templates for extracting resource names/IDs from the request or response
+    
+## Understanding resourceName in Tangram
+
+A **resourceName** uniquely identifies each resource instance (like a database, table, or user) in your integration. The **resourceType** defines the resource category (e.g., Database), while the **resourceName** pinpoints which specific resource is referenced (e.g., `sales_db`).
+
+**Why is resourceName important?**  
+Tangram relies on resourceName to:
+- Reference, create, update, or delete specific resources in your app
+- Display resources in the UI and automations
+- Map API operations to resource actions
+
+**How do you define resourceName?**  
+For each API operation, you specify a **resourceType** and a **resourceNameTemplate**. The resourceNameTemplate tells Tangram how to extract the resourceName, usually from API path parameters or request bodies.
+
+---
+
+## Understanding resourceName in Tangram
+
+A **resourceName** uniquely identifies each resource instance (like a database, table, or view) in your integration. The **resourceType** defines the resource category (e.g., Table), while the **resourceName** pinpoints which specific resource is referenced.
+
+Tangram uses the **resourceNameTemplate** to extract the resourceName for each API operation, typically from path parameters or the request body.
+
+---
+
+## Example: Mapping resourceName from an Endpoint
+
+For this endpoint in `open_api.yml`:
+
+```yaml
+/api/v1/databases/{dbName}/tables/{tableName}:
+  get:
+    operationId: getIcebergTable
+    parameters:
+      - name: dbName
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: tableName
+        in: path
+        required: true
+        schema:
+          type: string
+```
+
+The entry in `spec.pkl`:
+
+```pkl
+getIcebergTable {
+  resourceType = "Table"
+  resourceNameTemplate = "[{{parameters.dbName}}, {{parameters.tableName}}]"
+  action = "Get"
+}
+```
+
+Here, `resourceNameTemplate` tells Tangram to extract `dbName` and `tableName` from the path and use them to construct the resourceName.
+
+For example, a request to `GET /api/v1/databases/demo/analytics/tables/click_events` would result in the following Resource Name (RN) URI:
+
+```
+rn://ai.tangram/iceberg/Table/demo/analytics/click_events
+```
+
+This format captures the resource type along with its hierarchical location, providing a globally unique identifier for the resource.
+
+
+> See also: [Tangram Docs: resourceName](https://docs.tangram-os.ai/tutorial-basics/resource#resource-name)  
+
+---
+## How the Pieces Fit Together
+
+- **Tangram reads `app.pkl`** to identify the app and its category.
+- **Tangram reads `resource_types.pkl`** to learn what resources (and actions) this app supports.
+- **Tangram reads `spec.pkl`/`open_api.yaml`** to know how to call your app’s API (if any).
+- **Tangram uses `implemented_integrations.pkl`** to discover and load your app’s code for integration.
+
+---
+
+## 🧑‍💻 What Does This Enable?
+
+- Tangram can now **discover, create, update, and delete resources in your app** using consistent resource semantics.
+- The Tangram UI and automation tools can display your app's resources as first-class objects, and interact with them via standard actions.
