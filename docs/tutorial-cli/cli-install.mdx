@@ -4,19 +4,47 @@ sidebar_position: 1
 
 # Install Tangram OS CLI
 
+## macOS on Apple Silicon
 
+Download the native `arm64` distribution. It does not require Java.
 
-### Prerequisites
+```bash
+version="1.0.0-macos.1"
+archive="tangram-cli-1.0.0-macos-aarch64.tar.gz"
+release_url="https://github.com/tangram-data/tangram-os-doc/releases/download/tangram-cli-${version}"
 
-- **Java 11+**
+curl -fL "${release_url}/${archive}" -o "/tmp/${archive}"
+curl -fL "${release_url}/${archive}.sha256" -o "/tmp/${archive}.sha256"
+(cd /tmp && shasum -a 256 -c "${archive}.sha256")
 
-### Download Tangram CLI Jar 
+mkdir -p "$HOME/.local/bin"
+tar -xzf "/tmp/${archive}" -C /tmp
+install -m 0755 "/tmp/tangram-cli-1.0.0-macos-aarch64/tangram" "$HOME/.local/bin/tangram"
+```
 
-- Download [Tangram CLI JAR](https://github.com/tangram-data/tangram-os-doc/releases/download/tangram-cli-1.0.0/tangram-cli_2.13-1.0.0-all.jar) file
-- Move it to your preferred directory
+Ensure `$HOME/.local/bin` is on your `PATH`, then verify the installation:
 
+```bash
+tangram --help
+```
 
-### Start Tangram OS CLI Shell with Java
+The executable is signed with the Tangram Data Developer ID certificate but is
+not notarized. If a browser download is quarantined by macOS, use the `curl`
+installation above or approve the executable in **System Settings → Privacy &
+Security**.
+
+The [release page](https://github.com/tangram-data/tangram-os-doc/releases/tag/tangram-cli-1.0.0-macos.1)
+contains the checksum, license notices, and direct
+[source pointers](https://github.com/tangram-data/tangram-os-doc/releases/download/tangram-cli-1.0.0-macos.1/SOURCE.md).
+
+## Intel macOS, Linux, and Windows
+
+Use the cross-platform JAR. Java 21 or newer is recommended.
+
+1. Download the [Tangram CLI JAR](https://github.com/tangram-data/tangram-os-doc/releases/download/tangram-cli-1.0.0/tangram-cli_2.13-1.0.0-all.jar).
+2. Move it to your preferred directory.
+3. Start the CLI shell:
+
 ```bash
 java -jar ./tangram-cli_2.13-1.0.0-all.jar
 ```
